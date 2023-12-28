@@ -1,6 +1,6 @@
 ---
 
-# Project README
+# CloudMigration-AD-Upgrade
 
 ## Overview
 This project focuses on upgrading the Windows Server environment from 2012R2 to 2016, specifically targeting the domain and forest function levels. Additionally, it includes testing Azure AD synchronization using Azure AD Connect.
