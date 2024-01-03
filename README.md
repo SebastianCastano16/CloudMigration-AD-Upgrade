@@ -1,49 +1,46 @@
 ---
 
-# CloudMigration-AD-Upgrade
+# Active Directory Sandbox Environment
 
-## Overview
-This project focuses on upgrading the Windows Server environment from 2012R2 to 2016, specifically targeting the domain and forest function levels. Additionally, it includes testing Azure AD synchronization using Azure AD Connect.
+## Table of Contents
+1. **Introduction**
+2. **Testing & Results**
+3. **Future of the Environment**
+4. **Q&A**
 
-## Objective
-The primary goal is to demonstrate a step-by-step process for upgrading the on-premises Active Directory domain and functional levels, Azure AD Connect, and transitioning towards a cloud-only environment.
+## Introduction
+Active Directory (AD) serves as a comprehensive data store for network objects such as servers, printers, users, and computer accounts. Security measures, including logon authentication and access control, are integrated into AD.
 
-## Testing Notes
-### Windows Server 2016 Upgrade
-- Raising Domain & Forest Function Level:
-  - Initially attempted through AD Domain and Trusts, discovered both levels wouldn't raise simultaneously.
-  - Raised domain functional level first; later raised forest functional level separately.
+The current on-premises Active Directory is on Windows Server 2012R2, connected to Azure AD through Azure AD Connect version 1.6.16.0. With the end-of-life for Windows Server 2012R2 approaching, significant changes were tested to pave the way for server upgrades and a potential shift to a cloud-only environment.
 
-### Azure AD Sync Testing
-- Verified basic functions successfully synced with Azure AD.
-- Tested functionalities for:
-  - Users/User Attributes
-  - Groups
-  - Roles within On-Prem AD and Azure AD
+## Testing & Results
+### Objective
+The primary goal was to replicate the existing sandbox/in-production Domain Controller while preparing for upgrades and a potential transition to a cloud-only setup.
 
-### AAD Connect Break
-- Accidentally set AAD Connect to Auto Upgrade, disrupting synchronization.
-- Steps taken:
-  - Removed AAD Connect
-  - Downgraded on-prem AD forest and domain functional levels back to 2012
-  - Reinstalled an older version (1.6.16.0) of AAD Connect
+### Steps Taken
+- Setup of a physical server to act as the Domain Controller (Motherboard).
+- Installation of Windows Server 2019 to mirror the active sandbox settings, including schema, user attributes, domain additions, etc.
+- Backed up existing Group Policy Objects (GPOs) from the previous sandbox.
+- Creation of an Azure tenant and installation of Azure AD Connect to establish on-premises network connectivity with the cloud.
+- Testing of the environment for seamless operation of Active Directory and Azure AD Connect.
 
-### Challenges Encountered
-- Removing AAD Connect broke sync between on-prem and Azure.
-- Attempts to reconnect failed, resulting in login issues and authentication errors.
+### New Organizational Units & Testing
+Various tests were conducted involving user operations, group manipulations, attribute modifications, and administrative role assignments in both on-premises AD and Azure AD. These tests were replicated for both Windows Server 2012R2 and 2016 versions.
 
-### Identified Issue
-- Suspected cached data hindering Azure's ability to authenticate due to the disrupted connection.
+### Hybrid Environment Break to Cloud-Only
+A step-by-step process was executed to transition users from a hybrid environment to a cloud-only setup. This involved creating and manipulating Organizational Units (OUs), adding/removing users, and demonstrating the transition using PowerShell and Azure UI.
 
-### Resolution and Final Outcome
-- After several attempts, restored the environment to 2016 functional levels and AAD Connect version 2.1.16.0.
-- Successfully reestablished synchronization between on-prem AD and Azure AD.
+### Transition Success
+The tests showcased successful transitions of users into a cloud-only environment, including login functionality and password changes, indicating a seamless migration process.
 
-### Cloud-Only Testing
-- Conducted tests segregating Cloud-Only OUs from sync.
-- Successfully moved users between OUs, observed sync behavior with Azure AD.
+## Future of the Environment
+### Industry Movement
+Many organizations, including TTD, are increasingly moving towards a cloud-only environment.
 
-## Conclusion
-The project achieved the primary objective of demonstrating upgrades from 2012R2 to 2016 and synchronization with Azure AD. Challenges were faced and resolved, providing insights into potential issues during such upgrades.
+### Ongoing Work
+Collaboration between the IT, Network, and Infrastructure teams is focused on transitioning users and network functionalities to a cloud-only setup. Considerations include VPN, Radius, domain controller decommissioning, and printer adjustments.
+
+### Necessity of Change
+The transition to a cloud-only environment is vital for long-term sustainability and aligns with industry trends for modernization.
 
 ---
